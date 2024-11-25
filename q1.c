@@ -1,39 +1,13 @@
 #include <stdio.h>
 
-void activitySelection(int start[], int finish[], int n) {
-    int i, j;
-    printf("Selected activities: \n");
-    i = 0;
-    printf("%d ", i);
-    for (j = 1; j < n; j++) {
-        if (start[j] >= finish[i]) {
-            printf("%d ", j);
-            i = j;
-        }
-    }
+int sumArray(int arr[], int n) {
+    if (n == 0) return 0;
+    return arr[n - 1] + sumArray(arr, n - 1);
 }
 
 int main() {
-    int n, i;
-    
-    printf("Enter the number of activities: ");
-    scanf("%d", &n);
-    
-    int start[n], finish[n];
-    
-    printf("Enter start times:\n");
-    for (i = 0; i < n; i++) {
-        printf("Start time of activity %d: ", i+1);
-        scanf("%d", &start[i]);
-    }
-
-    printf("Enter finish times:\n");
-    for (i = 0; i < n; i++) {
-        printf("Finish time of activity %d: ", i+1);
-        scanf("%d", &finish[i]);
-    }
-
-    activitySelection(start, finish, n);
-    
+    int arr[] = {1, 2, 3, 4, 5};
+    int sum = sumArray(arr, 5);
+    printf("Sum: %d\n", sum);
     return 0;
 }
