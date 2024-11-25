@@ -1,96 +1,134 @@
+// SUM OF SUBSET
+
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 
-struct Node {
-    int data;
-    struct Node* next;
-};
+bool subsetSum(int arr[], int n, int sum, int subset[], int* subsetSize) {
+    if (sum == 0) {
+        return true;
+    }
+    if (n == 0 || sum < 0) {
+        return false;
+    }
 
-void split(struct Node* source, struct Node** frontRef, struct Node** backRef) {
-    struct Node* fast;
-    struct Node* slow;
-    slow = source;
-    fast = source->next;
+    if (subsetSum(arr, n - 1, sum, subset, subsetSize)) {
+        return true;
+    }
 
-    while (fast != NULL) {
-        fast = fast->next;
-        if (fast != NULL) {
-            slow = slow->next;
-            fast = fast->next;
+    if (arr[n - 1] <= sum) {
+        subset[(*subsetSize)++] = arr[n - 1];
+        if (subsetSum(arr, n - 1, sum - arr[n - 1], subset, subsetSize)) {
+            return true;
         }
+        (*subsetSize)--;  
     }
 
-    *frontRef = source;
-    *backRef = slow->next;
-    slow->next = NULL;
-}
-
-void merge(struct Node* a, struct Node* b, struct Node** result) {
-    if (a == NULL) {
-        *result = b;
-        return;
-    } else if (b == NULL) {
-        *result = a;
-        return;
-    }
-
-    if (a->data <= b->data) {
-        *result = a;
-        merge(a->next, b, &((*result)->next));
-    } else {
-        *result = b;
-        merge(a, b->next, &((*result)->next));
-    }
-}
-
-void mergeSort(struct Node** headRef) {
-    struct Node* head = *headRef;
-    struct Node* a;
-    struct Node* b;
-
-    if (head == NULL || head->next == NULL) {
-        return;
-    }
-
-    split(head, &a, &b);
-
-    mergeSort(&a);
-    mergeSort(&b);
-
-    merge(a, b, headRef);
-}
-
-void push(struct Node** head_ref, int new_data) {
-    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
-    new_node->data = new_data;
-    new_node->next = (*head_ref);
-    (*head_ref) = new_node;
-}
-
-void printList(struct Node* node) {
-    while (node != NULL) {
-        printf("%d ", node->data);
-        node = node->next;
-    }
-    printf("\n");
+    return false;
 }
 
 int main() {
-    struct Node* res = NULL;
-    struct Node* a = NULL;
+    int n, sum;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    int arr[n];
+    printf("Enter the elements: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    printf("Enter the sum to check: ");
+    scanf("%d", &sum);
 
-    push(&a, 38);
-    push(&a, 22);
-    push(&a, 15);
-    push(&a, 40);
-    push(&a, 29);
+    int subset[n];
+    int subsetSize = 0;
 
-    printf("Unsorted Linked List: ");
-    printList(a);
+    if (subsetSum(arr, n, sum, subset, &subsetSize)) {
+        printf("Subset with the given sum: ");
+        for (int i = 0; i < subsetSize; i++) {
+            printf("%d ", subset[i]);
+        }
+        printf("\n");
+    } else {
+        printf("No subset with the given sum exists.\n");
+    }
 
-    mergeSort(&a);
+    return 0;
+}
 
-    printf("Sorted Linked List: ");
-    printList(a);
+
+// N QUEEN PROBLEM
+
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_N 30  
+
+int board[MAX_N];
+int leftDiagonal[2 * MAX_N - 1], rightDiagonal[2 * MAX_N - 1], column[MAX_N];
+
+void printSolution(int N) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (board[i] == j)
+                printf("Q ");
+            else
+                printf(". ");
+        }
+        printf("\n");
+    }
+}
+
+bool isSafe(int row, int col, int N) {
+    return !column[col] && !leftDiagonal[row - col + N - 1] && !rightDiagonal[row + col];
+}
+
+void placeQueen(int row, int col, int N) {
+    column[col] = 1;
+    leftDiagonal[row - col + N - 1] = 1;
+    rightDiagonal[row + col] = 1;
+    board[row] = col;
+}
+
+void removeQueen(int row, int col, int N) {
+    column[col] = 0;
+    leftDiagonal[row - col + N - 1] = 0;
+    rightDiagonal[row + col] = 0;
+}
+
+bool solveNQ(int row, int N) {
+    if (row == N) {
+        printSolution(N);
+        return true;
+    }
+
+    for (int col = 0; col < N; col++) {
+        if (isSafe(row, col, N)) {
+            placeQueen(row, col, N);
+            if (solveNQ(row + 1, N))
+                return true;
+            removeQueen(row, col, N);
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    int N;
+    printf("Enter the value of N (size of the board): ");
+    scanf("%d", &N);
+
+    if (N > MAX_N) {
+        printf("N is too large! Maximum supported N is %d.\n", MAX_N);
+        return 0;
+    }
+
+    for (int i = 0; i < N; i++) {
+        board[i] = -1; 
+    }
+
+    if (!solveNQ(0, N)) {
+        printf("Solution does not exist.\n");
+    }
+
     return 0;
 }

@@ -1,26 +1,39 @@
 #include <stdio.h>
 
-void selectionSort(int arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        int minIndex = i;
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
-            }
+void activitySelection(int start[], int finish[], int n) {
+    int i, j;
+    printf("Selected activities: \n");
+    i = 0;
+    printf("%d ", i);
+    for (j = 1; j < n; j++) {
+        if (start[j] >= finish[i]) {
+            printf("%d ", j);
+            i = j;
         }
-        int temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
     }
 }
 
 int main() {
-    int arr[] = {64, 25, 12, 22, 11};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    selectionSort(arr, n);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+    int n, i;
+    
+    printf("Enter the number of activities: ");
+    scanf("%d", &n);
+    
+    int start[n], finish[n];
+    
+    printf("Enter start times:\n");
+    for (i = 0; i < n; i++) {
+        printf("Start time of activity %d: ", i+1);
+        scanf("%d", &start[i]);
     }
-    printf("\n");
+
+    printf("Enter finish times:\n");
+    for (i = 0; i < n; i++) {
+        printf("Finish time of activity %d: ", i+1);
+        scanf("%d", &finish[i]);
+    }
+
+    activitySelection(start, finish, n);
+    
     return 0;
 }
