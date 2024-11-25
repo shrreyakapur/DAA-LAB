@@ -1,27 +1,32 @@
+### 1) Selection Sort
+- **Time Complexity:** 
+  - Best Case: \( O(n^2) \)
+  - Average Case: \( O(n^2) \)
+  - Worst Case: \( O(n^2) \)
+- **Space Complexity:** \( O(1) \)
 
-### Q1) Sum of n Natural Numbers
-- **Recurrence Relation:** \( T(n) = T(n-1) + O(1) \)
-- **Time Complexity:** \( O(n) \)
-- **Space Complexity:** \( O(n) \)
+### 2) Bubble Sort
+- **Time Complexity:**
+  - Best Case: \( O(n) \) (when the array is already sorted)
+  - Average Case: \( O(n^2) \)
+  - Worst Case: \( O(n^2) \)
+- **Space Complexity:** \( O(1) \)
 
-### Q2) First n Fibonacci Numbers
-- **Recurrence Relation:** \( T(n) = T(n-1) + T(n-2) + O(1) \)
-- **Time Complexity:** \( O(2^n) \)
-- **Space Complexity:** \( O(n) \)
+### 3) Insertion Sort
+- **Time Complexity:**
+  - Best Case: \( O(n) \) (when the array is already sorted)
+  - Average Case: \( O(n^2) \)
+  - Worst Case: \( O(n^2) \)
+- **Space Complexity:** \( O(1) \)
 
-### Q3) Binary Search
-- **Recurrence Relation:** \( T(n) = T(n/2) + O(1) \)
-- **Time Complexity:** \( O(\log n) \)
-- **Space Complexity:** \( O(\log n) \)
+### 4) Merge Sort
+- **Recurrence Relation:** \( T(n) = 2T\left(\frac{n}{2}\right) + O(n) \)
+- **Time Complexity:**
+  - Best Case: \( O(n \log n) \)
+  - Average Case: \( O(n \log n) \)
+  - Worst Case: \( O(n \log n) \)
+- **Space Complexity:** \( O(n) \) (for temporary arrays during merging)
 
-### Q4) Factorial of a Number
-- **Recurrence Relation:** \( T(n) = T(n-1) + O(1) \)
-- **Time Complexity:** \( O(n) \)
-- **Space Complexity:** \( O(n) \)
-
-### Q5) Delete a Linked List
-- **Recurrence Relation:** \( T(n) = T(n-1) + O(1) \)
-- **Time Complexity:** \( O(n) \)
-- **Space Complexity:** \( O(n) \)
-
----
+### 5) Merge Sort Using Linked List
+- **Time Complexity:** \( O(n \log n) \) (all cases)
+- **Space Complexity:** \( O(1) \) (in-place with call stack usage)
